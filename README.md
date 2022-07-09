@@ -20,6 +20,6 @@ Backend for web application created in Java. It provides funcionality to offer s
 # Functionalities
 * Creating one of two account types - doctor or patient (client)
 * Profile personalisation 
-* Addition appointments to calendar as a doctor
+* Adding appointments to calendar as a doctor
 * Booking visits of specific type with a particular doctor as a client
 * Adding reviews / opinions about doctors
