@@ -1,6 +1,9 @@
 package com.healthcare_service.controller;
 
 import com.healthcare_service.DTO.doctor.*;
+import com.healthcare_service.DTO.opinion.OpinionDTO;
+import com.healthcare_service.DTO.visit.BookedVisitDTO;
+import com.healthcare_service.DTO.visit.NotBookedVisitDTO;
 import com.healthcare_service.entity.Doctor;
 import com.healthcare_service.DTO.doctor.DeleteVisitTypeDTO;
 import com.healthcare_service.entity.Opinion;
@@ -29,49 +32,49 @@ public class DoctorController {
     }
 
     @GetMapping("/doctor")
-    public ResponseEntity<List<Doctor>> getDoctors(){
+    public ResponseEntity<List<DoctorDTO>> getDoctors(){
         var doctors = doctorService.getDoctors();
         return new ResponseEntity<>(doctors, HttpStatus.OK);
     }
 
     @GetMapping("/doctor/{doctorId}")
-    public ResponseEntity<Doctor> getDoctorById(@PathVariable UUID doctorId){
+    public ResponseEntity<DoctorDTO> getDoctorById(@PathVariable UUID doctorId){
         var doctor = doctorService.getDoctorById(doctorId);
         return new ResponseEntity<>(doctor,HttpStatus.OK);
     }
 
     @GetMapping("/doctorByUsername/{doctorUsername}")
-    public ResponseEntity<Doctor> getDoctorByUsername(@PathVariable String doctorUsername){
+    public ResponseEntity<DoctorDTO> getDoctorByUsername(@PathVariable String doctorUsername){
         var doctor = doctorService.getDoctorByUsername(doctorUsername);
         return new ResponseEntity<>(doctor, HttpStatus.OK);
     }
 
     @GetMapping("/doctor/{id}/opinions")
-    public ResponseEntity<List<Opinion>> getOpinionsByDoctorId(@PathVariable UUID id){
+    public ResponseEntity<List<OpinionDTO>> getOpinionsByDoctorId(@PathVariable UUID id){
         var opinions = doctorService.getOpinionsByDoctorId(id);
         return new ResponseEntity<>(opinions, HttpStatus.OK);
     }
 
     @GetMapping("/doctorByVisitId")
-    public ResponseEntity<Doctor> getDoctorByVisitId(@RequestParam UUID visitId){
+    public ResponseEntity<DoctorDTO> getDoctorByVisitId(@RequestParam UUID visitId){
         var doctor = doctorService.getDoctorByVisitId(visitId);
         return new ResponseEntity<>(doctor, HttpStatus.OK);
     }
 
     @GetMapping("doctor/{doctorId}/notBookedVisits")
-    public ResponseEntity<List<Visit>> getNotBookedVisitsByDoctorId(@PathVariable UUID doctorId){
+    public ResponseEntity<List<NotBookedVisitDTO>> getNotBookedVisitsByDoctorId(@PathVariable UUID doctorId){
         var notBookedVisits = doctorService.getNotBookedVisitsByDoctorId(doctorId);
         return new ResponseEntity<>(notBookedVisits, HttpStatus.OK);
     }
 
     @GetMapping("doctor/{id}/bookedVisits")
-    public ResponseEntity<List<Visit>> getBookedVisitsByDoctorId(@PathVariable UUID id){
+    public ResponseEntity<List<BookedVisitDTO>> getBookedVisitsByDoctorId(@PathVariable UUID id){
         var bookedVisits = doctorService.getBookedVisitByDoctorId(id);
         return new ResponseEntity<>(bookedVisits, HttpStatus.OK);
     }
 
     @GetMapping("doctor/{id}/bookedVisitsHistory")
-    public ResponseEntity<List<Visit>> getBookedVisitsHistoryByDoctorId(@PathVariable UUID id){
+    public ResponseEntity<List<BookedVisitDTO>> getBookedVisitsHistoryByDoctorId(@PathVariable UUID id){
         var bookedVisitsHistory = doctorService.getBookedVisitHistoryByDoctorId(id);
         return new ResponseEntity<>(bookedVisitsHistory,HttpStatus.OK);
     }

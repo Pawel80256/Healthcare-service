@@ -1,5 +1,6 @@
 package com.healthcare_service.controller;
 
+import com.healthcare_service.DTO.doctor.DoctorDTO;
 import com.healthcare_service.entity.Clinic;
 import com.healthcare_service.entity.Doctor;
 import com.healthcare_service.service.clinic.ClinicService;
@@ -31,7 +32,7 @@ public class ClinicController {
     }
 
     @GetMapping("/clinic/{id}/doctors")
-    public ResponseEntity<List<Doctor>> findDoctorsByClinicId(@PathVariable UUID id){
+    public ResponseEntity<List<DoctorDTO>> findDoctorsByClinicId(@PathVariable UUID id){
         var doctors = clinicService.findDoctorsByClinicId(id);
         return new ResponseEntity<>(doctors, HttpStatus.OK);
     }

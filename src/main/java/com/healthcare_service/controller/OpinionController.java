@@ -1,5 +1,6 @@
 package com.healthcare_service.controller;
 
+import com.healthcare_service.DTO.opinion.OpinionDTO;
 import com.healthcare_service.DTO.opinion.OpinionInputDTO;
 import com.healthcare_service.entity.Opinion;
 import com.healthcare_service.service.opinion.OpinionService;
@@ -19,7 +20,7 @@ public class OpinionController {
     private final OpinionService opinionService;
 
     @GetMapping("/opinion")
-    public ResponseEntity<List<Opinion>> findAllOpinions(){
+    public ResponseEntity<List<OpinionDTO>> findAllOpinions(){
         var opinions = opinionService.getAllOpinions();
         return new ResponseEntity<>(opinions, HttpStatus.OK);
     }

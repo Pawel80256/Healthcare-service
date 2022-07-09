@@ -1,5 +1,7 @@
 package com.healthcare_service.controller;
 
+import com.healthcare_service.DTO.client.ClientDTO;
+import com.healthcare_service.DTO.visit.BookedVisitDTO;
 import com.healthcare_service.entity.Client;
 import com.healthcare_service.DTO.client.ClientInputDTO;
 import com.healthcare_service.entity.Visit;
@@ -26,31 +28,31 @@ public class ClientController {
     }
 
     @GetMapping("/client")
-    public ResponseEntity<List<Client>> getClients(){
+    public ResponseEntity<List<ClientDTO>> getClients(){
         var clients = clientService.getAllClients();
         return new ResponseEntity<>(clients, HttpStatus.OK);
     }
 
     @GetMapping("/client/{clientId}")
-    public ResponseEntity<Client> getClientById(@PathVariable UUID clientId){
+    public ResponseEntity<ClientDTO> getClientById(@PathVariable UUID clientId){
         var client = clientService.getClientById(clientId);
         return new ResponseEntity<>(client,HttpStatus.OK);
     }
 
     @GetMapping("clientByUsername/{clientUsername}")
-    public ResponseEntity<Client> getClientByUsername(@PathVariable String clientUsername){
+    public ResponseEntity<ClientDTO> getClientByUsername(@PathVariable String clientUsername){
         var client = clientService.getClientByUsername(clientUsername);
         return new ResponseEntity<>(client,HttpStatus.OK);
     }
 
     @GetMapping("client/{clientId}/visitsHistory")
-    public ResponseEntity<List<Visit>> getPastVisitsByClientId(@PathVariable UUID clientId){
+    public ResponseEntity<List<BookedVisitDTO>> getPastVisitsByClientId(@PathVariable UUID clientId){
         var pastVisits = clientService.getPastVisitsByClientId(clientId);
         return new ResponseEntity<>(pastVisits, HttpStatus.OK);
     }
 
     @GetMapping("client/{clientId}/bookedVisits")
-    public ResponseEntity<List<Visit>> getBookedVisitsByClientId(@PathVariable UUID clientId){
+    public ResponseEntity<List<BookedVisitDTO>> getBookedVisitsByClientId(@PathVariable UUID clientId){
         var bookedVisits = clientService.getBookedVisitByClientId(clientId);
         return new ResponseEntity<>(bookedVisits, HttpStatus.OK);
     }

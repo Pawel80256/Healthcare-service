@@ -6,6 +6,7 @@ import com.healthcare_service.DTO.visit.BookVisitDTO;
 import com.healthcare_service.DTO.visit.NotBookedVisitInputDTO;
 import com.healthcare_service.repository.VisitRepository;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -19,6 +20,7 @@ public class VisitService {
     private final VisitValidator visitValidator;
     private final VisitMapper visitMapper;
     private final VisitEditor visitEditor;
+
 
 
     public UUID addNotBookedVisit(NotBookedVisitInputDTO visitInputDTO){
