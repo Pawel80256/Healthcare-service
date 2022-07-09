@@ -1,0 +1,30 @@
+version: '3.1'
+
+services:
+  database:
+    image: postgres:14.0-alpine
+    container_name: database
+    ports:
+      - "8080:5432"
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=username
+      - POSTGRES_DB=database
+#  backend:
+#    depends_on:
+#      - database
+#    image: licencjat-backend:latest
+#    ports:
+#      - "5001:5001"
+#    environment:
+#      - SPRING_DATASOURCE_URL=jdbc:postgresql://database:5432/database
+#      - SPRING_DATASOURCE_USERNAME=username
+#      - SPRING_DATASOURCE_PASSWORD=password
+#      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+#      - SERVER_PORT=5001
+#  frontend:
+#    depends_on:
+#      - backend
+#    image: licencjat-frontend-2:latest
+#    ports:
+#      - 3000:3000
