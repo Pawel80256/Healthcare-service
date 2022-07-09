@@ -74,7 +74,7 @@ public class DoctorService {
     }
 
     public List<Visit> getBookedVisitByDoctorId(UUID id){
-        var doctor = doctorRepository.findById(id).get();
+        var doctor = doctorRepository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
 
         return doctor.getVisits().stream()
                 .filter((visit -> visit.getVisitDate().isAfter(LocalDateTime.now()) && visit.getClient() != null))
@@ -83,7 +83,7 @@ public class DoctorService {
     }
 
     public List<Visit> getNotBookedVisitsByDoctorId(UUID doctorId){
-        var doctor = doctorRepository.findById(doctorId).get();
+        var doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
 
         return doctor.getVisits().stream()
                 .filter(visit -> visit.getClient()==null && visit.getVisitDate().isAfter(LocalDateTime.now()))
@@ -92,7 +92,7 @@ public class DoctorService {
     }
 
     public List<Visit> getBookedVisitHistoryByDoctorId(UUID doctorId){
-        var doctor = doctorRepository.findById(doctorId).get();
+        var doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
 
         return doctor.getVisits().stream()
                 .filter(visit -> visit.getClient()!=null && visit.getVisitDate().isBefore(LocalDateTime.now()))
@@ -101,7 +101,7 @@ public class DoctorService {
     }
 
     public void deleteDoctor(UUID doctorId) {
-        var doctor = doctorRepository.findById(doctorId).get();
+        var doctor = doctorRepository.findById(doctorId).orElseThrow(() -> new NotFoundException("Nie znaleziono lekarza"));
         doctorRepository.delete(doctor);
     }
 

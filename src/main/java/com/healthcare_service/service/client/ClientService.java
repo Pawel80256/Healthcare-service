@@ -1,6 +1,7 @@
 package com.healthcare_service.service.client;
 
 import com.healthcare_service.entity.Client;
+import com.healthcare_service.exceptions.NotFoundException;
 import com.healthcare_service.repository.ClientRepository;
 import com.healthcare_service.DTO.client.ClientInputDTO;
 import com.healthcare_service.entity.Visit;
@@ -30,7 +31,7 @@ public class ClientService {
     }
 
     public Client getClientById(UUID clientId){
-        return clientRepository.findById(clientId).get();
+        return clientRepository.findById(clientId).orElseThrow(() -> new NotFoundException("Nie znaleziono pacjenta"));
     }
 
     public Client getClientByUsername(String username){
@@ -42,7 +43,7 @@ public class ClientService {
     }
 
     public List<Visit> getBookedVisitByClientId(UUID id){
-        var client = clientRepository.findById(id).get();
+        var client = clientRepository.findById(id).orElseThrow(() -> new NotFoundException("Nie znaleziono pacjenta"));
         var visits = visitRepository.findByClient(client);
         return visits.stream()
                 .filter((visit -> visit.getVisitDate().isAfter(LocalDateTime.now()) && visit.getClient() != null))
@@ -51,7 +52,7 @@ public class ClientService {
     }
 
     public List<Visit> getPastVisitsByClientId(UUID clientId){
-        var client = clientRepository.findById(clientId).get();
+        var client = clientRepository.findById(clientId).orElseThrow(() -> new NotFoundException("Nie znaleziono pacjenta"));
         var visits = visitRepository.findByClient(client);
 
         return visits.stream()
