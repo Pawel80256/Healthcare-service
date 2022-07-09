@@ -43,7 +43,7 @@ public class ClientController {
         return new ResponseEntity<>(client,HttpStatus.OK);
     }
 
-    @GetMapping("client/{clientId}/notBookedVisits")
+    @GetMapping("client/{clientId}/visitsHistory")
     public ResponseEntity<List<Visit>> getPastVisitsByClientId(@PathVariable UUID clientId){
         var pastVisits = clientService.getPastVisitsByClientId(clientId);
         return new ResponseEntity<>(pastVisits, HttpStatus.OK);

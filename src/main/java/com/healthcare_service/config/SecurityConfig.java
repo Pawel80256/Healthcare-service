@@ -5,6 +5,7 @@ import com.healthcare_service.authentication.CustomAuthorizationFilter;
 import com.healthcare_service.authentication.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -32,31 +33,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.cors().and().csrf().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.authorizeRequests().antMatchers("/api/login/**").permitAll();
+        http.authorizeRequests()
+                .antMatchers("/api/login/**").permitAll()
+                .antMatchers("/api/doctor/visitType").hasAnyAuthority("DOCTOR","ADMIN")
+                .antMatchers("api/doctor/{id}/bookedVisits").hasAnyAuthority("DOCTOR","ADMIN")
+                .antMatchers("api/doctor/{id}/notBookedVisits").authenticated()
+                .antMatchers("api/doctor/aboutMe").hasAnyAuthority("DOCTOR","ADMIN")
+                .antMatchers("api/doctor/personalData").hasAnyAuthority("DOCTOR","ADMIN")
+                .antMatchers("/api/visit/book").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/api/client/bookedVisits").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/api/client/visitsHistory").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers("/api/client/visitsHistory").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers(HttpMethod.POST,"/api/opinion").hasAnyAuthority("CLIENT","ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/doctor").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/client").hasAnyAuthority("ADMIN")
+                .antMatchers(HttpMethod.DELETE, "/api/opinion").hasAnyAuthority("ADMIN")
+                .antMatchers("/api/role").hasAnyAuthority("ADMIN");
 
-//        http.authorizeRequests().antMatchers("/api/visit").authenticated();
-//        http.authorizeRequests().antMatchers("/api/visit/book").hasAnyAuthority("CLIENT");
-//        http.authorizeRequests().antMatchers("/api/visit/complete").hasAnyAuthority("ADMIN");
-//        http.authorizeRequests().antMatchers("/api/visit/{id}/cancel").hasAnyAuthority("CLIENT","DOCTOR");
-//        http.authorizeRequests().antMatchers(DELETE,"/api/visit/{id}").hasAnyAuthority("DOCTOR","ADMIN");
-//        http.authorizeRequests().antMatchers(POST,"/api/visit").hasAnyAuthority("DOCTOR","ADMIN");
-//
-//        http.authorizeRequests().antMatchers("/api/doctor/personalData").hasAnyAuthority("DOCTOR");
-//        http.authorizeRequests().antMatchers("/api/doctor/aboutMe").hasAnyAuthority("DOCTOR");
-//        http.authorizeRequests().antMatchers("/api/doctor/visitType").hasAnyAuthority("DOCTOR","ADMIN");
-//        http.authorizeRequests().antMatchers("/api/doctor/editEverything").hasAnyAuthority("ADMIN");
-//        http.authorizeRequests().antMatchers(DELETE,"/api/doctor").hasAnyAuthority("ADMIN");
-//        http.authorizeRequests().antMatchers(POST,"/api/doctor").hasAnyAuthority("ADMIN");
-//
-//        http.authorizeRequests().antMatchers("/api/client/username/").authenticated();
-//        http.authorizeRequests().antMatchers("/api/client/editEverything").hasAnyAuthority("ADMIN");
-//        http.authorizeRequests().antMatchers(DELETE, "/api/client").hasAnyAuthority("ADMIN");
-//
-//
-//
-//        http.authorizeRequests().antMatchers(POST,"/api/opinion").hasAnyAuthority("CLIENT","ADMIN");
-//        http.authorizeRequests().antMatchers(DELETE,"/api/opinion/{id}").hasAnyAuthority("ADMIN");
-//        http.authorizeRequests().antMatchers(PUT,"/api/opinion/{id}").hasAnyAuthority("ADMIN");
 
         http.authorizeRequests().anyRequest().permitAll();
         http.addFilter(customAuthenticationFilter);
