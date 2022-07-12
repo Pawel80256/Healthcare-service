@@ -1,6 +1,5 @@
 # Spring Boot application providing functionalities for healtcare system like service
 
-*Project created for university purposes*
 
 ## Table of contents
 * [General info](#general-info)
