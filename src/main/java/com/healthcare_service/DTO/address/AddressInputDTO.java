@@ -1,10 +1,12 @@
 package com.healthcare_service.DTO.address;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 
-@Getter
+@Getter @Setter @Builder
 public class AddressInputDTO {
     @NotBlank
     private String city;
